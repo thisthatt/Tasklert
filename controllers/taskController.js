@@ -94,6 +94,9 @@ try {
 
         const tasks = await query;
 
+    
+
+
        return  res.status(200).json({
         status: 'success',
          results: tasks.length,
@@ -106,6 +109,7 @@ try {
 } catch (err){
     next(err)
 }
+
 
 }
 exports.getTask = async (req,res,next)=>{
@@ -135,7 +139,7 @@ exports.getTask = async (req,res,next)=>{
     
 
 
-exports.createTask = async (req,res)=>{
+exports.createTask = async (req,res, next)=>{
     // const newId = tasks[tasks.length - 1].id + 1;
     // const newTask =  Object.assign({ id: newId }, req.body)
   
@@ -153,17 +157,18 @@ exports.createTask = async (req,res)=>{
                     task: newTask
                 }
             })
-        } catch(err){
-            res.status(400).json({
-                status:'fail',
-                message: 'Invalid data sent!'
-            })
 
-        }
+            
+
+
+        }catch(err) { 
+
+            next(new taskError('Cannot create new task', 404))  
+         }
     }
     
 
-exports.updateTask = async (req,res)=>{
+exports.updateTask = async (req,res,next)=>{
 try {
 
     const task  = await Task.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true})
@@ -196,9 +201,6 @@ exports.deleteTask = async (req,res)=>{
     }
 
  catch (err){
-    res.status(404).json({
-        status: 'fail',
-        message: err
-    })
-}
+    next(new taskError('Cannot update task', 404))
+    }
 }

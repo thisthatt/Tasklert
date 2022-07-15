@@ -7,7 +7,7 @@ const dotenv = require('dotenv')
 const {taskError,errorDisplay} = require('./controllers/error')
 dotenv.config({path: './config.env'})
 const taskRouter = require('./routes/taskRoutes')
-const { application } = require('express')
+//const { application } = require('express')
 
 const app = express();
 //MIDDLEWARE
@@ -30,7 +30,7 @@ app.all('*',function(req,res){
 })
 
 app.use(function(err,req,res,next){
-        
+        console.log(err.name, err.statusCode)
     errorDisplay(err,res)
     // if (err.statusCode && err.status){
     //     res.status(statusCode).json({

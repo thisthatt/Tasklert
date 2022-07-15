@@ -24,12 +24,12 @@ constructor(message, statusCode){
 
 const errorDisplay = (err, res)=>{
     
-    
 const {statusCode, message} = err
-console.log(statusCode, message)
+
     res.status(statusCode).json({
 
-            message
+            message,
+            
     })
 }
 
