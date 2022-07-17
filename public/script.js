@@ -2,7 +2,7 @@
 
 const createTask= async(el)=>{
     const titleData = document.getElementById('title')
-    console.log(titleData.value)
+    
         
         await fetch('/api/v1/tasks/',{
             method: 'post',
@@ -17,7 +17,7 @@ const createTask= async(el)=>{
     
      const deleteTask = async (el)=>{
         const itemData = el.id
-    console.log(itemData)
+   
      try{
     
         const response = await fetch('/api/v1/tasks/'+ itemData, {
