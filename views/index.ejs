@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css"
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <navbar class="navbar">
+        <h1>Tasklert - A fine task manager and more!</h1>
+
+    </navbar>
+    <container class="main">
+    <div class="formsection shadow"> 
+    <!-- <form action="/createTask" method="POST">
+     
+    <label for="title">Task name</label>
+    <input type="text" id="title" name="title">
+    <label for="taskduration"></label>
+    <input type="datetime-local" id="taskduration" name="taskduration">
+    
+    <button class="btn" type="submit" value="Submit">Submit</button>
+    
+    </form> -->
+    </div>
+
+<!--form-->
+
+    <div class="formsection shadow"> 
+        <form class="taskform" id="task-form" method="POST" action="/api/v1/tasks/" onsubmit="createTask()">
+       
+        <label for="title">Task name</label>
+        <input type="text" id="title" name="title">
+        <label for="taskduration"></label>
+        <input type="datetime-local" id="taskduration" name="taskduration">
+        
+        <button class="btn" type="submit" value="Submit" onsubmit="createTask()">Submit</button>
+       
+        </form>
+        </div>
+
+    <div class="tasklist shadow">
+    <% for (var i = 0; i < alltasks.length; i++) { %>
+        <div class="taskitem"><h2><%= alltasks[i].title %> </h2>
+            <%= alltasks[i].completed %> 
+            
+            <button class="delbutton" onclick="deleteTask(this)" id="<%= alltasks[i]._id%>"> delete</button>
+            
+        </div>       
+    <% } %>
+    </div>
+</container>
+
+<script>
+
+    
+const createTask= async(el)=>{
+const titleData = document.getElementById('title')
+console.log(titleData.value)
+    
+    await fetch('/api/v1/tasks/',{
+        method: 'post',
+        headers: {'Content-Type':'application/json',
+        body:{'title': titleData.value}
+    }
+    })
+    location.reload()
+
+
+}
+
+ const deleteTask = async (el)=>{
+    const itemData = el.id
+console.log(itemData)
+ try{
+
+    const response = await fetch('/api/v1/tasks/'+ itemData, {
+        method: 'delete',
+        headers: {'Content-Type': 'application/json'}
+        
+    })
+    
+    if(response.status==204) location.reload()
+    
+    
+    }catch(err){
+         console.log(err)
+    }
+
+
+
+ }
+
+
+
+ document.getElementsByClassName="delbutton"
+// window.addEventListener('click', function(el){
+// console.log(event.target.id)
+
+
+
+
+// });
+
+/*
+
+    document.addEventListener('submit', function(e){
+        e.preventDefault()
+        //const newTaskentry = document.querySelector('#taskform')
+        //const form = document.getElementById('taskform')
+        //console.log(form.title.value)
+        console.log(e.target)
+        const newTaskentry= e.target
+        const title = newTaskentry.title.value
+        const date = newTaskentry.date
+    
+        const taskObj = {title};
+
+        fetch('http://127.0.0.1:3000/api/v1/tasks',{
+
+            method: "POST",
+            headers:{
+                "Content-Type": "application/json",
+                "Accept":"Application/json"
+            },
+            body: JSON.stringify(taskObj)
+
+        }).then(res => res.json()).then(window.location.reload())
+
+    })
+
+*/
+
+
+//const btn = document.querySelector('button')
+   //  function sendData(data){
+     //    const XHR = new XMLHttpRequest(), FD = new FormData();
+
+      //   for (name in data) {
+      //       FD.append( name, data[name]);
+    //     }
+
+    //     XHR.addEventListener('load', function (event){
+    //         alert('sent data');
+    //     });
+    //     XHR.addEventListener('error', function (event){
+    //         alert('error!');
+    //     });
+
+    //     XHR.open ('POST', 'http://127.0.0.1:3000/api/v1/tasks')
+
+    //     XHR.send(FD);
+    // }
+
+    // btn.addEventListener('click', function(){
+    //     sendData({title:'ok'});
+    // })
+</script>
+</body>
+</html>

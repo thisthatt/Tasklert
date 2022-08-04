@@ -1,7 +1,7 @@
 //const fs = require('fs')
 const Task = require('./../models/taskModel')
 const {taskError} = require('./error')
-
+const viewTask = require('./viewController')
 // exports.checkID = (req,res,next, val)=>{
 
     
@@ -148,21 +148,26 @@ exports.createTask = async (req,res, next)=>{
     // fs.writeFile(`${__dirname}/../data/tasks.json`, JSON.stringify(tasks, null, 4), 
     //     // eslint-disable-next-line no-unused-vars
     //     err =>{
-
+console.log(req.body)
     try {
-    const newTask = await Task.create(req.body)
-            res.status(201).json({
-                status:'success',
-                data:{
-                    task: newTask
-                }
-            })
+    const newTask = Task.create(req.body)
+    
+        // window.location
+        // //return await newTask
+        await newTask
+         res.status(201).redirect('/')
+            ///  res.status(201).json({
+            //       status:'success',
+            //      data:{
+            //           task: newTask
+            //       }
+            //   })
 
             
 
 
         }catch(err) { 
-
+            console.log(err)
             next(new taskError('Cannot create new task', 404))  
          }
     }
@@ -189,8 +194,7 @@ try {
     }
 
 }
-exports.deleteTask = async (req,res)=>{
-
+exports.deleteTask = async (req,res, next)=>{
     try {
    await Task.findByIdAndRemove(req.params.id)
    
@@ -201,6 +205,6 @@ exports.deleteTask = async (req,res)=>{
     }
 
  catch (err){
-    next(new taskError('Cannot update task', 404))
+    next(new taskError('Cannot delete task', 404))
     }
 }
