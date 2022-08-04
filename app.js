@@ -7,6 +7,7 @@ const dotenv = require('dotenv')
 const {taskError,errorDisplay} = require('./controllers/error')
 dotenv.config({path: './config.env'})
 const taskRouter = require('./routes/taskRoutes')
+const viewRouter = require('./routes/viewRoutes')
 //const { application } = require('express')
 
 const app = express();
@@ -16,22 +17,26 @@ if (process.env.NODE_ENV === 'development'){
     app.use(morgan('dev'))
 }
 app.use(express.json())
+app.use(express.urlencoded({extended: true, limit: '10kb'}))
 app.use(express.static(`${__dirname}/public`))
 
 //Route handler
+app.set('view engine ', 'ejs')
+
+app.use('/', viewRouter)
 
 app.use('/api/v1/tasks', taskRouter);
-app.all('*',function(req,res){
+
+app.all('*',function(req,res,next){
     throw new taskError('This URL doesnt exist!',500);
     
-
 
 
 })
 
 app.use(function(err,req,res,next){
-        console.log(err.name, err.statusCode)
-    errorDisplay(err,res)
+        console.log(err.name, err.statusCode, err.message, err.stack)
+    //errorDisplay(err,res)
     // if (err.statusCode && err.status){
     //     res.status(statusCode).json({
     //         status: err.status,
@@ -39,7 +44,10 @@ app.use(function(err,req,res,next){
     //     })
     // } 
     
-    
+    // err.status = 404;
+    // // render the error page
+    // res.status(err.status || 500);
+    // res.render('error',{errorStatus: err.status}); // 
     
 
 

@@ -16,16 +16,15 @@ const taskSchema = new Schema ({
         type: [Date],
         default: Date.now
     },
-    status:{
-        type: String,
-        required: [true, 'status required'],
-        default: 'active'
+    completed:{
+        type: Boolean,
+        default: 'false'
     },
     tags: { 
         type: [String],
 
     },
-    notes:{
+    note:{
         type: String
     }
 
