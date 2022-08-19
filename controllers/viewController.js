@@ -14,8 +14,6 @@ exports.createTask = async  (req,res,next)=>{
 
  const newTask = new TaskModel({title: req.body.title});
  newTask.save().then(res.redirect('/')).catch(err=>console.log(err) )
- 
-
 
 
 }

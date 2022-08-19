@@ -2,48 +2,8 @@
 const Task = require('./../models/taskModel')
 const {taskError} = require('./error')
 const viewTask = require('./viewController')
-// exports.checkID = (req,res,next, val)=>{
 
-    
-//     if (req.params.id * 1 > tasks.length){
-//         return res.status(404).json({
-//             status:'fail',
-//             message: 'Invalid ID'
-//         })
-//     }
-// next();
-// }
-
-// exports.checkBody = (req,res,next)=>{
-
-// if (!req.body.title) {
-//     return res.status(404).json({
-//     status:'fail',
-//     message: 'Missing task title.'
-
-// })
-
-
-//}
-//next();
-//}
-
-// class APIfeature {
-//     constructor(query, queryString){
-//         this.query = query;
-//         this.queryString = queryString;
-
-//     }
-
-
-
-// }
-
-
-
-
-exports.getAllTasks = async (req,res,next)=>{
-    
+exports.getAllTasks = async (req,res,next)=>{   
     
 try {
 
@@ -87,15 +47,8 @@ try {
 
                 
             }    
-            
-        
-
-
 
         const tasks = await query;
-
-    
-
 
        return  res.status(200).json({
         status: 'success',
@@ -131,24 +84,11 @@ exports.getTask = async (req,res,next)=>{
     } catch (err)
     {
             next(err)
-    }
-
- 
+    } 
 }
 
-    
-
-
 exports.createTask = async (req,res, next)=>{
-    // const newId = tasks[tasks.length - 1].id + 1;
-    // const newTask =  Object.assign({ id: newId }, req.body)
-  
-    // tasks.push(newTask)
-    // // eslint-disable-next-line no-unused-vars
-    // fs.writeFile(`${__dirname}/../data/tasks.json`, JSON.stringify(tasks, null, 4), 
-    //     // eslint-disable-next-line no-unused-vars
-    //     err =>{
-console.log(req.body)
+
     try {
     const newTask = Task.create(req.body)
     
@@ -162,10 +102,7 @@ console.log(req.body)
             //           task: newTask
             //       }
             //   })
-
-            
-
-
+     
         }catch(err) { 
             console.log(err)
             next(new taskError('Cannot create new task', 404))  
