@@ -8,7 +8,6 @@ const {taskError,errorDisplay} = require('./controllers/error')
 dotenv.config({path: './config.env'})
 const taskRouter = require('./routes/taskRoutes')
 const viewRouter = require('./routes/viewRoutes')
-//const { application } = require('express')
 
 const app = express();
 //MIDDLEWARE
@@ -53,40 +52,17 @@ app.use(function(err,req,res,next){
 
 })
 const port = process.env.PORT || 3000;
-const mongourl = `mongodb+srv://dukenukem4w:333duke333@cluster0.ixejo.mongodb.net/tasklert?retryWrites=true`
 
 
 
 
 
-mongoose.connect(mongourl).then(() =>
-            console.log('Connected to MongoDB')
-        )
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log('Connected to MongoDB'));
         
 
-// const { Schema} = mongoose;
 
-// const taskSchema = new Schema ({
-//     title: {
-//         type: String,
-//         required: [true, 'title required'],
-//         index: true,
-//         unique: true
-//     }
-    
-
-
-// })
-
-// const Task = mongoose.model('Task', taskSchema)
-
-// const testTask = new Task ({title:'sdf'})
-
-// testTask.save().then(doc =>{
-//     console.log(doc) 
-// }).catch(err =>{
-//     console.log(err)
-// })
 
 app.listen(port, ()=>{
     console.log(`App running on ${port}`)

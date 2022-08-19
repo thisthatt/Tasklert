@@ -1,5 +1,3 @@
-
-
 const createTask= async(el)=>{
     const titleData = document.getElementById('title')
     
@@ -11,8 +9,7 @@ const createTask= async(el)=>{
         }
         })
         location.reload()
-    
-    
+        
     }
     
      const deleteTask = async (el)=>{
@@ -31,9 +28,7 @@ const createTask= async(el)=>{
         
         }catch(err){
              console.log(err)
-        }
-    
-    
+        }   
     
      }
     
